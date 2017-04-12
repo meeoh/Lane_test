@@ -9,12 +9,12 @@ var Dropzone = require('react-dropzone');
 class App extends Component {
 
   constructor(props) {
-    super(props);
+    super(props);    
     this.state = {
       preview: "",
       rotation: 0,
       scale: 1,
-      colour: [255, 255, 255, 0.6]
+      colour: [255, 255, 255, 1],
     };
   }
 
@@ -32,6 +32,7 @@ class App extends Component {
   }
 
   changePosition(newPos) {
+    console.log(newPos);
     this.setState({
       position: newPos
     });
@@ -40,10 +41,20 @@ class App extends Component {
   onRotateClick() {
     let currentRotation = this.state.rotation;    
 
-    var newRotation = currentRotation == 0 ? 45 : 0
+    var newRotation = currentRotation == 0 ? 45 : 0;
 
     this.setState({
       rotation: newRotation
+    });
+  }
+
+  onScaleClick() {
+    let currentScale = this.state.scale;
+
+    var newScale = currentScale == 1 ? 0.5 : 1;
+
+    this.setState({
+      scale: newScale
     })
   }
 
@@ -72,16 +83,21 @@ class App extends Component {
         <Col md={3} sm={3} xs={6}>
           <div className="availableActions">
             <h6>Available Actions</h6>
-            <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button>
-            <Button bsStyle="primary">Translate</Button>
-            <Button bsStyle="primary">Opacity</Button>
-            <Button bsStyle="primary">Scale</Button>
+            {this.state.position}
+            {this.state.rotation == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
+            {this.state.scale == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Scale</Button> : null}
+            {this.state.colour[3] == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Opacity</Button> : null}
+            {this.state.position == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
           </div>
         </Col>
 
         <Col md={2} sm={2} xs={6}>
           <div className="Applied Actions">
             <h6>Applied Actions</h6>
+            {this.state.rotation == 45 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
+            {this.state.scale == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Scale</Button> : null}
+            {this.state.colour[3] == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Opacity</Button> : null}
+            {this.state.position == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
           </div>
         </Col>        
 
