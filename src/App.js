@@ -14,7 +14,7 @@ class App extends Component {
       preview: "",
       rotation: 0,
       scale: 1,
-      colour: [255, 255, 255, 1],
+      colour: [255, 255, 255, 0],
     };
   }
 
@@ -31,8 +31,7 @@ class App extends Component {
     // this.dropzone.open();
   }
 
-  changePosition(newPos) {
-    console.log(newPos);
+  changePosition(newPos) {    
     this.setState({
       position: newPos
     });
@@ -58,6 +57,18 @@ class App extends Component {
     })
   }
 
+    onOpacityClick() {
+    let currentOpacity = this.state.colour[3];
+
+    var newOpacity = currentOpacity == 1 ? 0.5 : 1;
+    var newColour = this.state.colour;
+    newColour[3] = newOpacity;
+
+    this.setState({
+      colour: newColour
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -70,7 +81,6 @@ class App extends Component {
                 width={200}
                 height={200}
                 border={0}
-                color={this.state.colour} // RGBA
                 scale={this.state.scale}
                 rotate={this.state.rotation}
                 position={this.state.position}
@@ -82,11 +92,10 @@ class App extends Component {
 
         <Col md={3} sm={3} xs={6}>
           <div className="availableActions">
-            <h6>Available Actions</h6>
-            {this.state.position}
+            <h6>Available Actions</h6>            
             {this.state.rotation == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
-            {this.state.scale == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Scale</Button> : null}
-            {this.state.colour[3] == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Opacity</Button> : null}
+            {this.state.scale == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onScaleClick.bind(this)}>Scale</Button> : null}
+            {this.state.colour[3] == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onOpacityClick.bind(this)}>Opacity</Button> : null}
             {this.state.position == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
           </div>
         </Col>
@@ -95,8 +104,8 @@ class App extends Component {
           <div className="Applied Actions">
             <h6>Applied Actions</h6>
             {this.state.rotation == 45 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
-            {this.state.scale == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Scale</Button> : null}
-            {this.state.colour[3] == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Opacity</Button> : null}
+            {this.state.scale == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onScaleClick.bind(this)}>Scale</Button> : null}
+            {this.state.colour[3] == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onOpacityClick.bind(this)}>Opacity</Button> : null}
             {this.state.position == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
           </div>
         </Col>        
