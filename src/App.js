@@ -14,7 +14,7 @@ class App extends Component {
       preview: "",
       rotation: 0,
       scale: 1,
-      colour: [255, 255, 255, 0],
+      colour: [255, 255, 255, 1],
       position: {x: 0.5, y: 0.5}
     };
   }
@@ -26,11 +26,6 @@ class App extends Component {
       console.log('Accepted files: ', acceptedFiles);
       console.log('Rejected files: ', rejectedFiles);
   }  
-
-  onOpenClick() {
-    console.log(this.dropzone);
-    // this.dropzone.open();
-  }
 
   changePosition(newPos) {    
     this.setState({
@@ -73,11 +68,27 @@ class App extends Component {
   onTranslateClick() {
     let currentPosition = this.state.position;
 
-    var newPosition = currentPosition.x == 0.5 && currentPosition.y == 0.5 ? {x: 0, y: 0.5} : {x: 0.5, y: 0.5};
+    var newPosition = currentPosition.x == 0.5 && currentPosition.y == 0.5 ? {x: 0.2, y: 0.5} : {x: 0.5, y: 0.5};
 
     this.setState({
       position: newPosition
     })
+  }
+
+  onResetClick() {  
+    console.log(this.state.preview);
+    this.setState({
+      preview: "http://i.imgur.com/H4ffF6u.png",
+      rotation: 0,
+      scale: 1,
+      colour: [255, 255, 255, 1],
+      position: {x: 0.5, y: 0.5}
+    }, function() {
+      this.setState({
+        preview: ""
+      });
+    });
+
   }
 
   render() {
@@ -87,7 +98,7 @@ class App extends Component {
         <Col md={4} sm={4} xs={12}>        
           <div className="dropWrapper">
             <Dropzone ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop.bind(this)} disableClick={true} >     
-              <AvatarEditor
+              <AvatarEditor style={{opacity: this.state.colour[3]}}
                 image={this.state.preview}
                 width={200}
                 height={200}
@@ -112,13 +123,14 @@ class App extends Component {
         </Col>
 
         <Col md={2} sm={2} xs={6}>
-          <div className="Applied Actions">
+          <div className="appliedActions">
             <h6>Applied Actions</h6>
             {this.state.rotation == 45 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
             {this.state.scale == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onScaleClick.bind(this)}>Scale</Button> : null}
             {this.state.colour[3] == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onOpacityClick.bind(this)}>Opacity</Button> : null}
-            {this.state.position.x == 0 && this.state.position.y == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onTranslateClick.bind(this)}>Translate</Button> : null}
+            {this.state.position.x == 0.2 && this.state.position.y == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onTranslateClick.bind(this)}>Translate</Button> : null}
           </div>
+          <Button style={{'margin-top': "10%"}} onClick={this.onResetClick.bind(this)} bsStyle="primary">Reset</Button>
         </Col>        
 
       </div>
