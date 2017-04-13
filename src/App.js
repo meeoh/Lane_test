@@ -15,6 +15,7 @@ class App extends Component {
       rotation: 0,
       scale: 1,
       colour: [255, 255, 255, 0],
+      position: {x: 0.5, y: 0.5}
     };
   }
 
@@ -69,6 +70,16 @@ class App extends Component {
     })
   }
 
+  onTranslateClick() {
+    let currentPosition = this.state.position;
+
+    var newPosition = currentPosition.x == 0.5 && currentPosition.y == 0.5 ? {x: 0, y: 0.5} : {x: 0.5, y: 0.5};
+
+    this.setState({
+      position: newPosition
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -96,7 +107,7 @@ class App extends Component {
             {this.state.rotation == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
             {this.state.scale == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onScaleClick.bind(this)}>Scale</Button> : null}
             {this.state.colour[3] == 1 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onOpacityClick.bind(this)}>Opacity</Button> : null}
-            {this.state.position == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
+            {this.state.position.x == 0.5 && this.state.position.y == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onTranslateClick.bind(this)}>Translate</Button> : null}
           </div>
         </Col>
 
@@ -106,7 +117,7 @@ class App extends Component {
             {this.state.rotation == 45 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
             {this.state.scale == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onScaleClick.bind(this)}>Scale</Button> : null}
             {this.state.colour[3] == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onOpacityClick.bind(this)}>Opacity</Button> : null}
-            {this.state.position == 0 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onRotateClick.bind(this)}>Rotate</Button> : null}
+            {this.state.position.x == 0 && this.state.position.y == 0.5 && this.state.preview.length > 0 ? <Button bsStyle="primary" onClick={this.onTranslateClick.bind(this)}>Translate</Button> : null}
           </div>
         </Col>        
 
